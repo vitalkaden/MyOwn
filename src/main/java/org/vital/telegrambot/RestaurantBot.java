@@ -7,34 +7,38 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.vital.telegrambot.constant.VarConsant;
+import org.vital.telegrambot.constant.VarConstant;
 import org.vital.telegrambot.menu.Choice;
 import org.vital.telegrambot.orders.MenuItem;
 import org.vital.telegrambot.services.OrderMessageSender;
 import org.vital.telegrambot.services.SendMessageServise;
 
-import static org.vital.telegrambot.constant.VarConsant.*;
+import static org.vital.telegrambot.constant.VarConstant.*;
 
 
 @Component
 public class RestaurantBot extends TelegramLongPollingBot {
 
-    SendMessageServise sendMessageServise = new SendMessageServise();
-    OrderMessageSender orderMessageSender = new OrderMessageSender();
-
     private final String username;
     private final String token;
+
     private final Choice choice;
-    private final VarConsant varConsant;
+    private final VarConstant varConstant;
+    private final SendMessageServise sendMessageServise;
+    private final OrderMessageSender orderMessageSender;
 
     @Autowired
-    public RestaurantBot(Choice choice, VarConsant varConsant,
+    public RestaurantBot(SendMessageServise sendMessageServise,OrderMessageSender orderMessageSender,
+                         Choice choice, VarConstant varConstant,
                          @Value("${telegram.bot.username}") String username,
                          @Value("${telegram.bot.token}") String token) {
         this.username = username;
         this.token = token;
+
         this.choice = choice;
-        this.varConsant = varConsant;
+        this.varConstant = varConstant;
+        this.sendMessageServise = sendMessageServise;
+        this.orderMessageSender = orderMessageSender;
     }
 
     @Override
@@ -54,7 +58,7 @@ public class RestaurantBot extends TelegramLongPollingBot {
 
             String messageText = update.getMessage().getText();
 
-            if (String.join(",", varConsant.MenuConstants()).contains(messageText)){
+            if (String.join(",", varConstant.MenuConstants()).contains(messageText)){
                 MenuItem menuItem = choice.chooseMeal((messageText));
                 executeMessage(orderMessageSender.orderMessage(update,menuItem.toString()));
             }
@@ -69,8 +73,8 @@ public class RestaurantBot extends TelegramLongPollingBot {
 
 
 
-            if (!String.join(",", varConsant.MenuConstants()).contains(messageText)
-                    && !String.join(",", varConsant.InterfaceConsants()).contains(messageText)){
+            if (!String.join(",", varConstant.MenuConstants()).contains(messageText)
+                    && !String.join(",", varConstant.InterfaceConstants()).contains(messageText)){
                 executeMessage(sendMessageServise.incorrectCommand(update));
             }
         }

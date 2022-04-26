@@ -1,15 +1,15 @@
 package org.vital.telegrambot.services;
 
+import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 
-import static org.vital.telegrambot.constant.VarConsant.*;
+import static org.vital.telegrambot.constant.VarConstant.*;
 
-
-public class SendMessageServise {
-    private final ButtonService buttonService = new ButtonService();
-    private final CreateMessageService createMessageService = new CreateMessageService();
+@Service
+public record SendMessageServise(ButtonService buttonService,
+                                 CreateMessageService createMessageService) {
 
     public SendMessage greetingMessage(Update update) {
         SendMessage message = createMessageService.createMessage(update, greetingMessage);
@@ -42,9 +42,9 @@ public class SendMessageServise {
     public SendMessage burgerMenuMessage(Update update) {
         return sendMessage(update, burgerMenuMessage, buttonService.getBurgerMenu());
     }
-//
+
     public SendMessage incorrectCommand(Update update) {
-        return createMessageService.createMessage(update, incorrectCommandMesage);
+        return createMessageService.createMessage(update, incorrectCommandMessage);
     }
 
     private SendMessage sendMessage(Update update, String message, ReplyKeyboardMarkup markup) {

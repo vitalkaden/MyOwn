@@ -1,11 +1,10 @@
 package org.vital.telegrambot.constant;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class VarConsant {
+public class VarConstant {
     //sendMessage
     public static final String saladMenuMessage = "select your salad!";
     public static final String burgerMenuMessage = "select your burger!";
@@ -13,7 +12,7 @@ public class VarConsant {
     public static final String desertMenuMessage = "select your desert!";
     public static final String greetingMessage = "Hello, motherfucker!" +
             " choose your meal";
-    public static final String incorrectCommandMesage = "IncorrectCommand";
+    public static final String incorrectCommandMessage = "IncorrectCommand";
 
     //MainMenu
     public static final String START = "/start";
@@ -43,12 +42,7 @@ public class VarConsant {
     public static final String VEGETARIAN = "vegetarian";
     public static final String BEEF = "beef";
 
-
-    @Autowired
-    public VarConsant() {
-    }
-
-    public List<String> InterfaceConsants() {
+    public List<String> InterfaceConstants() {
        return List.of(DESERTS,DRINKS,HELLO,BURGERS,SALADS,BACK,START);
     }
     public List<String> MenuConstants(){

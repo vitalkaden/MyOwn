@@ -1,10 +1,12 @@
 package org.vital.telegrambot.services;
 
+import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ButtonService {
 
     public ReplyKeyboardMarkup getMainMenu(){

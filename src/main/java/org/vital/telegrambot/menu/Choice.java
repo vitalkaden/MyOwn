@@ -7,12 +7,9 @@ import org.vital.telegrambot.orders.MenuItem;
 
 
 @Service
-public class Choice {
-   private final MenuRepository menuRepository;
-
+public record Choice(MenuRepository menuRepository) {
     @Autowired
-    public Choice(MenuRepository menuRepository) {
-        this.menuRepository = menuRepository;
+    public Choice {
     }
 
     public MenuItem chooseMeal(String action) {

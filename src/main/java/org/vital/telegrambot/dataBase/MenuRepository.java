@@ -1,6 +1,5 @@
 package org.vital.telegrambot.dataBase;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vital.telegrambot.orders.MenuItem;
 import javax.persistence.EntityManager;
@@ -8,10 +7,7 @@ import javax.persistence.TypedQuery;
 
 
 @Service
-public class MenuRepository {
-
-    @Autowired
-    private EntityManager entityManager;
+public record MenuRepository(EntityManager entityManager) {
 
     public MenuItem getByName(String name) {
         TypedQuery<MenuItem> query = entityManager.createQuery("SELECT mi FROM MenuItem mi WHERE mi.name=:name", MenuItem.class);
