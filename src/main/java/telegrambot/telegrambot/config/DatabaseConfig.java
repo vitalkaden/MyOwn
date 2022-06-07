@@ -1,4 +1,4 @@
-package org.vital.telegrambot.config;
+package telegrambot.telegrambot.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

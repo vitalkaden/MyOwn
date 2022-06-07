@@ -1,7 +1,7 @@
-package org.vital.telegrambot.dataBase;
+package telegrambot.telegrambot.dataBase;
 
 import org.springframework.stereotype.Service;
-import org.vital.telegrambot.orders.MenuItem;
+
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 

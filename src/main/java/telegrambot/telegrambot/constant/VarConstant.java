@@ -1,4 +1,4 @@
-package org.vital.telegrambot.constant;
+package telegrambot.telegrambot.constant;
 
 import org.springframework.stereotype.Service;
 import java.util.List;

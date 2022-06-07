@@ -1,8 +1,8 @@
-package telegrambot.telegrambot.menu;
+package telegrambot.telegrambot.services;
 
 import org.springframework.stereotype.Service;
 import telegrambot.telegrambot.dataBase.MenuRepository;
-import telegrambot.telegrambot.orders.MenuItem;
+import telegrambot.telegrambot.dataBase.MenuItem;
 
 
 @Service

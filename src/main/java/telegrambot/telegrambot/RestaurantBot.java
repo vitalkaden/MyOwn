@@ -1,4 +1,4 @@
-package org.vital.telegrambot;
+package telegrambot.telegrambot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,13 +7,15 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.vital.telegrambot.constant.VarConstant;
-import org.vital.telegrambot.menu.Choice;
-import org.vital.telegrambot.orders.MenuItem;
-import org.vital.telegrambot.services.OrderMessageSender;
-import org.vital.telegrambot.services.SendMessageServise;
+import telegrambot.telegrambot.constant.VarConstant;
+import telegrambot.telegrambot.dataBase.UserItem;
+import telegrambot.telegrambot.services.ChoiceService;
+import telegrambot.telegrambot.dataBase.MenuItem;
+import telegrambot.telegrambot.services.OrderMessageSender;
+import telegrambot.telegrambot.services.SaveUserDataService;
+import telegrambot.telegrambot.services.SendMessageServise;
 
-import static org.vital.telegrambot.constant.VarConstant.*;
+import static telegrambot.telegrambot.constant.VarConstant.*;
 
 
 @Component
@@ -22,19 +24,22 @@ public class RestaurantBot extends TelegramLongPollingBot {
     private final String username;
     private final String token;
 
-    private final Choice choice;
+    private final ChoiceService choice;
+    private final SaveUserDataService saveUserDataService;
     private final VarConstant varConstant;
     private final SendMessageServise sendMessageServise;
     private final OrderMessageSender orderMessageSender;
 
     @Autowired
-    public RestaurantBot(SendMessageServise sendMessageServise,OrderMessageSender orderMessageSender,
-                         Choice choice, VarConstant varConstant,
+    public RestaurantBot(SendMessageServise sendMessageServise, OrderMessageSender orderMessageSender,
+                         SaveUserDataService saveUserDataService,
+                         ChoiceService choice, VarConstant varConstant,
                          @Value("${telegram.bot.username}") String username,
                          @Value("${telegram.bot.token}") String token) {
         this.username = username;
         this.token = token;
 
+        this.saveUserDataService = saveUserDataService;
         this.choice = choice;
         this.varConstant = varConstant;
         this.sendMessageServise = sendMessageServise;
@@ -60,7 +65,13 @@ public class RestaurantBot extends TelegramLongPollingBot {
 
             if (String.join(",", varConstant.MenuConstants()).contains(messageText)){
                 MenuItem menuItem = choice.chooseMeal((messageText));
+
                 executeMessage(orderMessageSender.orderMessage(update,menuItem.toString()));
+
+                UserItem userItem = new UserItem(update.getMessage().getChat().getFirstName(),update.getMessage().getChat().getLastName(),
+                        update.getMessage().getChatId());
+
+                saveUserDataService.saveUserData(userItem);
             }
 
             switch (messageText){
@@ -71,8 +82,6 @@ public class RestaurantBot extends TelegramLongPollingBot {
                 case BURGERS -> executeMessage(sendMessageServise.burgerMenuMessage(update));
             }
 
-
-
             if (!String.join(",", varConstant.MenuConstants()).contains(messageText)
                     && !String.join(",", varConstant.InterfaceConstants()).contains(messageText)){
                 executeMessage(sendMessageServise.incorrectCommand(update));
@@ -82,7 +91,6 @@ public class RestaurantBot extends TelegramLongPollingBot {
     private <T extends BotApiMethod> void executeMessage(T sendMessage){
         try{
             execute(sendMessage);
-
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }

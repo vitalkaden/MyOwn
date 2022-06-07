@@ -1,4 +1,4 @@
-package org.vital.telegrambot.orders;
+package telegrambot.telegrambot.dataBase;
 
 import javax.persistence.*;
 

@@ -1,4 +1,4 @@
-package org.vital.telegrambot.orders;
+package telegrambot.telegrambot.dataBase;
 
 
 import javax.persistence.*;
@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class MenuItem {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(name = "cost")
     private int cost;

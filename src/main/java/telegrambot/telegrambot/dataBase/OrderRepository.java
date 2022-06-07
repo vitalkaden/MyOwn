@@ -1,8 +1,7 @@
-package org.vital.telegrambot.dataBase;
+package telegrambot.telegrambot.dataBase;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.vital.telegrambot.orders.MenuOrders;
 
 import javax.persistence.EntityManager;
 

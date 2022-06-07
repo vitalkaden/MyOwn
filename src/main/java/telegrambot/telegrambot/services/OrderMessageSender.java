@@ -1,4 +1,4 @@
-package org.vital.telegrambot.services;
+package telegrambot.telegrambot.services;
 
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
