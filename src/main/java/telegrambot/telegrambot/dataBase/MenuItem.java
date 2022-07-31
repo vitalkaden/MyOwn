@@ -2,6 +2,8 @@ package telegrambot.telegrambot.dataBase;
 
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "menu")
@@ -14,6 +16,9 @@ public class MenuItem {
     private int cost;
     @Column(name = "name")
     private String name;
+
+    @ManyToMany(mappedBy = "menuItems")
+    private Set<UserItem> userItems = new HashSet<>();
 
     public MenuItem(){
 
@@ -52,4 +57,7 @@ public class MenuItem {
         this.name = name;
     }
 
+    public Set<UserItem> getUserItems() {
+        return userItems;
+    }
 }

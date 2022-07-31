@@ -26,24 +26,16 @@ public class UserRepository{
         .setParameter(2,userItem.getLastName())
         .setParameter(3,userItem.getChatId())
         .executeUpdate();
+    }
 
-
-
-//    private String URL = "jdbc:mysql://localhost:3306/TelBotDB";
-//    private String USER = "root";
-//    private String PASSWORD = "mozgorez2";
-//    private Connection connection;
-
-//        try {
-//            connection = DriverManager.getConnection(URL,USER,PASSWORD);
-//            PreparedStatement  preparedStatement= connection.prepareStatement("INSERT INTO users(FirstName,LastName,ChatId)
-//            VALUES (?,?,?) ON DUPLICATE KEY UPDATE FirstName = VALUES (FirstName),LastName = VALUES (LastName),chatId = VALUES (chatId)");
-//            preparedStatement.setString(1,firstName);
-//            preparedStatement.setString(2,lastName);
-//            preparedStatement.setLong(3,chatId);
-//            preparedStatement.executeUpdate();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+    @Transactional
+    public void addMenuItem(UserItem userItem, MenuItem menuItem) {
+        userItem.getMenuItems().add(menuItem);
+        entityManager1.merge(userItem);
+//        entityManager1.createNativeQuery("INSERT INTO users_menu (chat_id,id)VALUES (?,?) " +
+//                        "on duplicate key update id = VALUES(id)")
+//                .setParameter(1,userItem.getChatId())
+//                .setParameter(2,menuItem.getId())
+//                .executeUpdate();
     }
 }

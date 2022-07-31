@@ -72,6 +72,7 @@ public class RestaurantBot extends TelegramLongPollingBot {
                         update.getMessage().getChatId());
 
                 saveUserDataService.saveUserData(userItem);
+                saveUserDataService.saveUserItems(userItem,menuItem);
             }
 
             switch (messageText){
